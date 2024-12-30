@@ -38,4 +38,10 @@ export class ProductController {
 
         this.client.emit('product_deleted', id);
     }
+
+    @Post(':id/like')
+    async like(@Param('id') id: number) {
+        const product = await this.productService.findOne(id);
+        return this.productService.update(id, { likes: product.likes + 1 });
+    }
 }

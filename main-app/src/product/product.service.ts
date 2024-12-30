@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from './product.model';
 import { Model } from 'mongoose';
+import { filter } from 'rxjs';
 
 @Injectable()
 export class ProductService {
@@ -24,5 +25,11 @@ export class ProductService {
 
     async findOne(id: any): Promise<Product> {
         return this.productModel.findById(id).exec();
+    }
+
+    async get(id: any): Promise<Product> {
+        const products = this.productModel.find().exec();
+        const product = (await products).filter(p => p.id === id)[0];
+        return product;
     }
 }

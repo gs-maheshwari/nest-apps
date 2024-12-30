@@ -13,6 +13,10 @@ export class ProductService {
         return this.productRepository.find();
     }
 
+    async get(id): Promise<Product> {
+        return this.productRepository.getId(id);
+    }
+
     async create(data): Promise<Product> {
         return this.productRepository.save(data);
     }
